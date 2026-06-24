@@ -3,18 +3,6 @@
 An end-to-end Content-Based Movie Recommendation Engine built using Natural Language Processing (NLP). The system extracts semantic features from movie metadata, descriptions, and taglines using advanced text preprocessing (`nltk`) and statistical vectorization (`TF-IDF`) to map over 45,000 films into a high-dimensional geometric space for fast, accurate similarity retrieval.
 
 [![Streamlit App](streamlit.jpg)](https://movie-recommended-system-jntmcf8kx53aemwvqqdcbf.streamlit.app/?view=home)
----
-
-## 🖥️ Application Dashboard
-
-<div align="center">
-  <img src="Movie.png" alt="CineMatch Web Application UI" width="90%" style="border-radius: 8px; border: 1px solid #ddd;"/>
-  <br>
-  <sup><i>Figure 1: Interactive Streamlit UI dashboard featuring semantic natural-language title search and dynamic filtering configurations.</i></sup>
-</div>
-> 💡 **Developer Note:** To update this image, create an `assets/` directory in your root folder, save your application screenshot as `dashboard_screenshot.png`, and it will automatically map right here!
-
----
 
 ## 📌 Project Architecture & Pipeline
 
@@ -73,6 +61,14 @@ Recommendations are retrieved by computing the **Cosine Similarity** score betwe
 
 $$\text{Cosine Similarity}(\mathbf{A}, \mathbf{B}) = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|} = \frac{\sum_{i=1}^{n} A_i B_i}{\sqrt{\sum_{i=1}^{n} A_i^2} \sqrt{\sum_{i=1}^{n} B_i^2}}$$
 
+---
+## 🖥️ Application Dashboard
+
+<div align="center">
+  <img src="Movie.png" alt="CineMatch Web Application UI" width="90%" style="border-radius: 8px; border: 1px solid #ddd;"/>
+  <br>
+  <sup><i>Figure 1: Interactive Streamlit UI dashboard featuring semantic natural-language title search and dynamic filtering configurations.</i></sup>
+</div>
 ---
 
 ## ⚡ Production Optimizations (Memory & Speed)
