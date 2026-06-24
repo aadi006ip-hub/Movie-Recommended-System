@@ -94,8 +94,7 @@ Make sure Python 3.9+ is installed on your environment.
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/yourusername/cinematch-nlp.git](https://github.com/aadi006ip-hub/Movie-Recommended-System.git)
-cd cinematch-nlp
+git clone (https://github.com/aadi006ip-hub/Movie-Recommended-System.git)
 
 ```
 ### 2. Install dependencies
