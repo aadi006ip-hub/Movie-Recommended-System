@@ -19,36 +19,32 @@ An end-to-end Content-Based Movie Recommendation Engine built using Natural Lang
 
 
 ```
-[ Raw Dataset ] ➔ [ Data Cleaning & Structuring ] ➔ [ NLTK NLP Pipeline ]
+[ Raw Dataset ] ➔ [ Feature Selection (6 Core Columns) ] ➔ [ NLTK NLP Pipeline ]
 │
 [ Streamlit UI ] 🔀 [ Cosine Similarity Engine ] 🔀 [ TF-IDF Vectorization ]
 ```
 
-1. **Data Ingestion & Cleaning:** Parsing complex textual formats (e.g., JSON stringified lists in genres) and handling missing values across 45,466 entries.
+1. **Feature Reduction & Selection:** Narrowing down the raw dataset into 6 high-impact semantic and mathematical features for lean computational overhead.
 2. **Text Preprocessing Pipeline (`nltk`):** Tokenization, stop-word elimination, case folding, and WordNet Lemmatization.
-3. **Feature Engineering:** Constructing a comprehensive "Metadata Soup" combining `overview`, `tagline`, `genres`, and `keywords`.
+3. **Feature Engineering:** Constructing a comprehensive "Metadata Soup" combining text attributes (`overview`, `tagline`) and parsing structural JSON components (`genres`).
 4. **Vectorization:** Transforming corpus text into numerical feature matrices using Term Frequency-Inverse Document Frequency (TF-IDF).
 5. **Similarity Engine:** Measuring spatial distance using Cosine Similarity to serve real-time recommendations.
 
 ---
 
-## 📊 Dataset Profile
+## 📊 Dataset Profile & Selected Features
 
-The system processes a comprehensive dataset consisting of **45,466 movies** across **24 operational columns**. 
+The system operates on an optimized feature subset consisting of **45,453 rows** reduced down to **6 targeted columns**. This conscious reduction eliminates noise and reduces memory requirements during similarity matrix calculations.
 
-### Dynamic Schema Audit
-| # | Column | Non-Null Count | Dtype | NLP/Strategic Role |
+### Optimized Schema Audit
+| # | Column | Operational Dtype | Feature Category | Strategic NLP & Sorting Role |
 |---|---|---|---|---|
-| 2 | `budget` | 45466 | float | Feature engineering / Metadata filtering |
-| 3 | `genres` | 45466 | object | Core Component for Metadata Soup |
-| 5 | `id` | 45466 | int | Unique identifier for relational mapping |
-| 7 | `original_language` | 45455 | object | Language filtering constraints |
-| 8 | `original_title` | 45466 | object | Search query matching |
-| 9 | `overview` | 44512 | object | Primary text corpus for semantic extraction |
-| 10| `popularity` | 45461 | object | Dynamic ranking and post-recommendation sorting |
-| 14| `release_date` | 45379 | object | Time-decay sorting / Epoch weighting |
-| 19| `tagline` | 20412 | object | Secondary contextual text feature |
-| 20| `title` | 45460 | object | Target UI Lookup key |
+| 0 | `title` | `object` (string) | Identifier | Target lookup key and UI display label. |
+| 1 | `overview` | `object` (string) | Text Corpus | Primary text content for extracting core plot semantics and context. |
+| 2 | `genres` | `object` (JSON/List) | Metadata | Parsed from stringified JSON lists to inject explicit thematic tags into the vocabulary soup. |
+| 3 | `tagline` | `object` (string) | Text Corpus | Secondary contextual text feature to capture unique movie hooks and tones. |
+| 4 | `vote_average`| `float64` | Quantitative | Statistical rating overlay used for quality thresholds or post-recommendation ranking. |
+| 5 | `popularity`  | `float64` | Quantitative | Dynamic numerical metrics used for fallback trending sorts and popular filtering options. |
 
 ---
 
@@ -62,10 +58,10 @@ To make recommendations highly context-aware rather than just matching explicit 
 * **Lemmatization:** Leveraging `nltk.stem.WordNetLemmatizer` to reduce words to their morphological base form (e.g., *fights, fighting, fought* $\rightarrow$ *fight*). This prevents dimensional explosion in the sparse matrix.
 
 ### 2. Feature Synthesizer (The "Metadata Soup")
-Instead of evaluating `overview` alone, columns like `genres`, `tagline`, and `production_companies` are transformed, formatted into single strings, and concatenated into a unified text feature block per movie.
+Instead of evaluating `overview` alone, the stringified JSON array in `genres` is programmatically extracted to clean strings (e.g., `[{'id': 16, 'name': 'Animation'}]` $\rightarrow$ `'Animation'`). This parsed text is then concatenated with the `overview` and `tagline` vectors to construct a single unified text profile block for every film.
 
 ### 3. Term Frequency-Inverse Document Frequency (TF-IDF)
-The text block is vectorized into an $N \times M$ matrix where $N = 45466$ (movies) and $M = \text{vocabulary dimension}$.
+The text block is vectorized into an $N \times M$ matrix where $N = 45453$ (movies) and $M = \text{vocabulary dimension}$.
 
 $$\text{TF-IDF}(t, d, D) = \text{TF}(t, d) \times \log\left(\frac{|D|}{1 + |\{d \in D : t \in d\}|}\right)$$
 
@@ -80,8 +76,8 @@ $$\text{Cosine Similarity}(\mathbf{A}, \mathbf{B}) = \frac{\mathbf{A} \cdot \mat
 
 ## ⚡ Production Optimizations (Memory & Speed)
 
-Processing a $45466 \times 45466$ dense floating-point matrix can crash memory allocations ($>15 \text{ GB}$ RAM). This project implements enterprise-level optimizations:
-* **Scipy Sparse Arrays:** Retaining vectors in `scipy.sparse` formats, dropping memory foot-print by up to 85%.
+Processing a $45453 \times 45453$ dense floating-point matrix can crash memory allocations ($>15 \text{ GB}$ RAM). This project implements enterprise-level optimizations:
+* **Scipy Sparse Arrays:** Retaining vectors in `scipy.sparse` formats, dropping memory footprint by up to 85%.
 * **Matrix Truncation:** Storing only the top 100 similarity indices for each movie during training, saving a compressed pickle file (`similarity_indices.pkl`) of less than $40\text{ MB}$ for deployment.
 * **Streamlit Caching (`@st.cache_data`):** Prevents re-reading files or recalculating matrices on browser state updates.
 
@@ -94,7 +90,7 @@ Make sure Python 3.9+ is installed on your environment.
 
 ### 1. Clone the repository
 ```bash
-git clone (https://github.com/aadi006ip-hub/Movie-Recommended-System.git)
+git clone (https://github.com/yourusername/cinematch-nlp.git)
 
 ```
 ### 2. Install dependencies
@@ -118,7 +114,7 @@ streamlit run app.py
 
 ```
 ## 🔮 Future Scalability Matrix
- * **Hybridization:** Integrating Collaborative Filtering via Matrix Factorization (SVD) to overlay textual alignment with actual user rating tendencies.
+ * **Hybridization:** Combining textual alignment with quantitative parameters like vote_average and popularity to perform a weighted score optimization.
  * **Transformer Migration:** Transitioning static TF-IDF weights to contextual dense vector embeddings via Sentence-BERT (all-MiniLM-L6-v2) or CodeBERT.
 ```
 
