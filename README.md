@@ -2,13 +2,13 @@
 
 An end-to-end Content-Based Movie Recommendation Engine built using Natural Language Processing (NLP). The system extracts semantic features from movie metadata, descriptions, and taglines using advanced text preprocessing (`nltk`) and statistical vectorization (`TF-IDF`) to map over 45,000 films into a high-dimensional geometric space for fast, accurate similarity retrieval.
 
-[![Streamlit App](streamlit.jpg)](https://rainfall-prediction-project-ahmvchzty59jtvtjuva7vy.streamlit.app/)
+[![Streamlit App](streamlit.jpg)](https://movie-recommended-system-jntmcf8kx53aemwvqqdcbf.streamlit.app/?view=home)
 ---
 
 ## 🖥️ Application Dashboard
 
 <div align="center">
-  <img src="assets/dashboard_screenshot.png" alt="CineMatch Web Application UI" width="90%" style="border-radius: 8px; border: 1px solid #ddd;"/>
+  <img src="Movie.png" alt="CineMatch Web Application UI" width="90%" style="border-radius: 8px; border: 1px solid #ddd;"/>
   <br>
   <sup><i>Figure 1: Interactive Streamlit UI dashboard featuring semantic natural-language title search and dynamic filtering configurations.</i></sup>
 </div>
