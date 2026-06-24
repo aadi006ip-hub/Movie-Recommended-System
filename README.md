@@ -1,4 +1,4 @@
-## 🎬 CineMatch: Context-Aware Movie Recommendation System
+# 🎬 Movie Recommendation System
 
 An end-to-end Content-Based Movie Recommendation Engine built using Natural Language Processing (NLP). The system extracts semantic features from movie metadata, descriptions, and taglines using advanced text preprocessing (`nltk`) and statistical vectorization (`TF-IDF`) to map over 45,000 films into a high-dimensional geometric space for fast, accurate similarity retrieval.
 
@@ -94,7 +94,7 @@ Make sure Python 3.9+ is installed on your environment.
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/yourusername/cinematch-nlp.git](https://github.com/yourusername/cinematch-nlp.git)
+git clone [https://github.com/yourusername/cinematch-nlp.git](https://github.com/aadi006ip-hub/Movie-Recommended-System.git)
 cd cinematch-nlp
 
 ```
